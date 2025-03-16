@@ -7,6 +7,6 @@
 ![image](https://github.com/user-attachments/assets/8d832039-e4e2-4352-b4bc-5507bfd1568e)
 
 ### 用户页面
-![image](https://github.com/user-attachments/assets/99e8241e-c7f1-4c2c-a82e-df0c1a439034)
+![image](https://github.com/user-attachments/assets/16f9ac6f-1066-4099-905a-2778fa6c001f)
 
 
