@@ -2,7 +2,7 @@
   <div class="user-page">
     <header class="header">
       <div class="header-left">
-        <!-- 点击头像跳转到 PersonInfo.vue -->
+        <!-- 点击头像跳转到用户详情页 -->
         <div class="user-info" @click="goToUserDetail">
           <img :src="avatarUrl" alt="头像" class="avatar" />
           <span class="username">{{ displayName }}</span>
@@ -17,10 +17,20 @@
       <aside class="sidebar">
         <ul class="menu">
           <li class="menu-item">
-            <router-link to="/user/dashboard">仪表盘</router-link>
+            <router-link to="/user/dashboard" class="menu-link">仪表盘</router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/user/profile">个人资料</router-link>
+            <!-- 用户信息 -->
+            <div @click="toggleUserInfo" class="menu-title">
+              用户信息
+              <span class="arrow">{{ isUserInfoOpen ? '▼' : '▶' }}</span>
+            </div>
+            <!-- 用户信息子目录 -->
+            <ul v-if="isUserInfoOpen" class="sub-menu">
+              <li class="sub-menu-item">
+                <router-link to="/user/userinfo/userlist" class="sub-menu-link">用户列表</router-link>
+              </li>
+            </ul>
           </li>
         </ul>
       </aside>
@@ -33,7 +43,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import defaultAvatar from '@/assets/default-avatar.png';
@@ -43,6 +53,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const isUserInfoOpen = ref(false); // 控制用户信息子目录的展开状态
 
     const user = computed(() => store.state.user);
     const displayName = computed(() => user.value?.username || user.value?.phone || user.value?.email || '未登录');
@@ -68,6 +79,11 @@ export default {
       router.push('/user/detail');
     };
 
+    // 切换用户信息子目录的展开状态
+    const toggleUserInfo = () => {
+      isUserInfoOpen.value = !isUserInfoOpen.value;
+    };
+
     // 页面加载时检查用户是否登录
     onMounted(() => {
       if (!store.state.user) {
@@ -81,6 +97,8 @@ export default {
       avatarUrl,
       logout,
       goToUserDetail,
+      isUserInfoOpen,
+      toggleUserInfo,
     };
   },
 };
@@ -164,13 +182,45 @@ export default {
   border-bottom: 1px solid #002140;
 }
 
-.menu-item a {
+.menu-link {
   color: white;
   text-decoration: none;
-  display: block;
+  font-size: 14px; /* 仪表盘字体大小 */
 }
 
-.menu-item a:hover {
+.menu-link:hover {
+  color: #1890ff;
+}
+
+.menu-title {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px; /* 用户信息字体大小 */
+}
+
+.arrow {
+  font-size: 12px;
+}
+
+.sub-menu {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 20px;
+}
+
+.sub-menu-item {
+  padding: 10px 0;
+}
+
+.sub-menu-link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px; /* 用户列表字体大小 */
+}
+
+.sub-menu-link:hover {
   color: #1890ff;
 }
 

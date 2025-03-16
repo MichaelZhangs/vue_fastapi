@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserLogin from "@/components/UserLogin.vue";
 import UserPage from "@/views/UserPage.vue"; // 用户页面
 import UserDashboard from "@/views/UserDashboard.vue";
-import UserProfile from "@/views/UserProfile.vue";
+import UserInfo from "@/views/UserInfo.vue";
 import PasswordLogin from "@/views/PasswordLogin.vue";
 import UserRegister from "@/views/UserRegister.vue";
 import ForgetPassword from "@/views/ForgetPassword.vue";
 import UserDetail from '@/views/UserDetail.vue'; // 新增详情页
-
+import UserList from '@/views/UserList.vue'; // 新增用户列表页
 
 const routes = [
   {
@@ -42,8 +42,14 @@ const routes = [
         component: UserDashboard,
       },
       {
-        path: "profile",
-        component: UserProfile,
+        path: "userinfo",
+        component: UserInfo,
+        children: [
+          {
+            path: "userlist", // 用户列表作为用户信息的子路由
+            component: UserList,
+          },
+        ],
       },
     ],
   },
@@ -54,6 +60,7 @@ const routes = [
     meta: { requiresAuth: true },
   },
 ];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
@@ -68,7 +75,5 @@ router.beforeEach((to, from, next) => {
     next(); // 已登录则继续
   }
 });
-
-
 
 export default router;
