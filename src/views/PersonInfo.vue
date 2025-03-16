@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import defaultAvatar from '@/assets/default-avatar.png';
 import defaultqrcode from '@/assets/logo.png';
@@ -50,15 +50,23 @@ export default {
   name: 'PersonInfo',
   setup() {
     const store = useStore();
-    const user = computed(() => store.state.user);
-    const qrcodeUrl = ref('');
+    const user = computed(() => store.state.user); // 从 Vuex 获取用户信息
+    const qrcodeUrl = ref(''); // 二维码图片地址
 
     // 生成二维码
     const generateQrcode = async () => {
       try {
+        // 二维码内容：用户名和手机号
         const content = `用户名: ${user.value.username}\n手机号: ${user.value.phone}`;
-        const url = await QRCode.toDataURL(content);
-        qrcodeUrl.value = url;
+
+        // 生成二维码图片
+        const url = await QRCode.toDataURL(content, {
+          errorCorrectionLevel: 'H', // 高容错率
+          width: 200, // 二维码宽度
+          margin: 2, // 二维码边距
+        });
+
+        qrcodeUrl.value = url; // 更新二维码图片地址
         alert("二维码生成成功");
       } catch (error) {
         console.error("生成二维码失败", error);
@@ -71,7 +79,7 @@ export default {
       if (qrcodeUrl.value) {
         const link = document.createElement('a');
         link.href = qrcodeUrl.value;
-        link.download = 'my-qrcode.png';
+        link.download = 'my-qrcode.png'; // 下载文件名
         link.click();
       } else {
         alert("请先生成二维码");
