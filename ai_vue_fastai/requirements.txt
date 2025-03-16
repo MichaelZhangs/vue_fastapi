@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+cryptography
+python-jose
+python-multipart
+pydantic-settings
+pymysql
+redis
+pillow
+qrcode
