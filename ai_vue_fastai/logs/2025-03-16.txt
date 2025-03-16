@@ -1,2 +1,24 @@
 2025-03-16 00:27:18,782 - ERROR - 获取用户列表失败: 'MysqlBaseModel' object has no attribute 'execute_query'
 2025-03-16 00:27:49,765 - ERROR - 获取用户列表失败: 'MysqlBaseModel' object has no attribute 'execute_query'
+2025-03-16 10:14:56,314 - INFO - 发送验证码: phone=18654537087, code=380917
+2025-03-16 10:14:57,610 - INFO - 登录请求: username=18654537087, password=380917
+2025-03-16 10:14:57,616 - INFO - 登录成功: phone=18654537087
+2025-03-16 10:24:09,419 - ERROR - 获取用户列表失败: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '%王%'' at line 1")
+2025-03-16 10:24:10,362 - ERROR - 获取用户列表失败: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '%王%'' at line 1")
+2025-03-16 10:24:14,954 - ERROR - 获取用户列表失败: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '%王%'' at line 1")
+2025-03-16 10:34:47,130 - ERROR - 获取用户列表失败: 404: 没有用户数据
+2025-03-16 10:37:43,169 - ERROR - 获取用户列表失败: 404: 没有用户数据
+2025-03-16 10:37:45,307 - ERROR - 获取用户列表失败: 404: 没有用户数据
+2025-03-16 10:37:52,216 - ERROR - 获取用户列表失败: 404: 没有用户数据
+2025-03-16 10:46:36,935 - INFO - 发送验证码: phone=13676542345, code=701747
+2025-03-16 10:46:38,410 - INFO - 登录请求: username=13676542345, password=701747
+2025-03-16 10:46:38,414 - INFO - 登录成功: phone=13676542345
+2025-03-16 10:47:04,916 - ERROR - 更新失败: (1062, "Duplicate entry '张三' for key 'users.username'")
+2025-03-16 11:10:31,396 - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "D:\conda\lib\asyncio\events.py", line 81, in _run
+    self._context.run(self._callback, *self._args)
+  File "D:\conda\lib\asyncio\proactor_events.py", line 162, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。

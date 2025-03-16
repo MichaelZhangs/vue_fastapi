@@ -98,19 +98,34 @@ class MysqlBaseModel:
         query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
         self.db.execute(query, list(data.values()))
 
-    def select(self, table_name: str, where: dict = None):
+    def select(self, table_name: str, where: dict = None, limit: int = None, offset: int = None):
         """
         查询数据
         :param table_name: 表名
-        :param where: 条件字典，例如 {"name": "Alice"}
+        :param where: 条件字典，例如 {"username LIKE": "%王%", "sex": "male"}
+        :param limit: 限制返回的行数
+        :param offset: 偏移量
         :return: 查询结果
         """
         query = f"SELECT * FROM {table_name}"
+        params = []
         if where:
-            conditions = " AND ".join([f"{k} = %s" for k in where.keys()])
-            query += f" WHERE {conditions}"
-            return self.db.execute(query, list(where.values()))
-        return self.db.execute(query)
+            conditions = []
+            for key, value in where.items():
+                if " LIKE" in key:  # 处理 LIKE 条件
+                    conditions.append(f"{key} %s")
+                    params.append(value)
+                else:  # 处理普通条件
+                    conditions.append(f"{key} = %s")
+                    params.append(value)
+            query += " WHERE " + " AND ".join(conditions)
+        if limit is not None:
+            query += " LIMIT %s"
+            params.append(limit)
+        if offset is not None:
+            query += " OFFSET %s"
+            params.append(offset)
+        return self.db.execute(query, params)
 
     def update(self, table_name: str, data: dict, where: dict):
         """
@@ -164,7 +179,7 @@ def init_db():
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     phone VARCHAR(15) UNIQUE,
                     email VARCHAR(255) UNIQUE,
-                    username VARCHAR(255) UNIQUE,
+                    username VARCHAR(255) ,
                     sex ENUM('male', 'female', 'other') DEFAULT 'other',
                     password VARCHAR(255),
                     description TEXT,

@@ -75,9 +75,7 @@ class PagedResponse(BaseModel):
 # 临时存储验证码（生产环境应使用Redis）
 sms_codes = {}
 
-
-# 获取所有用户列表
-@router.get("/get-users", response_model=List[UserList])
+@router.get("/get-users", response_model=PagedResponse)
 async def get_users(
     username: Optional[str] = Query(None, description="用户名（模糊匹配）"),
     phone: Optional[str] = Query(None, description="手机号（模糊匹配）"),
@@ -88,33 +86,23 @@ async def get_users(
     try:
         model = MysqlBaseModel()
 
-        # 构建基础查询
-        query = "SELECT * FROM users WHERE 1=1"
-        params = []
-
-        # 添加查询条件
+        # 构建查询条件
+        where = {}
         if username:
-            query += " AND username LIKE %s"
-            params.append(f"%{username}%")
+            where["username LIKE"] = f"%{username}%"  # 注意键包含 LIKE
         if phone:
-            query += " AND phone LIKE %s"
-            params.append(f"%{phone}%")
+            where["phone LIKE"] = f"%{phone}%"  # 注意键包含 LIKE
         if sex:
-            query += " AND sex = %s"
-            params.append(sex)
+            where["sex"] = sex  # 普通条件
 
         # 获取总数据量
-        count_query = f"SELECT COUNT(*) as total FROM ({query}) AS subquery"
-        total_count = model.db.execute(count_query, params)
-        total_count = total_count[0]["total"] if total_count else 0
+        total_count = len(model.select("users", where))  # 使用 select 方法获取总数据量
 
-        # 添加分页条件
+        # 计算分页偏移量
         offset = (page - 1) * page_size
-        query += " LIMIT %s OFFSET %s"
-        params.extend([page_size, offset])
 
-        # 执行查询
-        users = model.db.execute(query, params)
+        # 获取分页数据
+        users = model.select("users", where, limit=page_size, offset=offset)
         print(f"数据库查询结果: {users}")  # 打印查询结果
 
         if not users:
