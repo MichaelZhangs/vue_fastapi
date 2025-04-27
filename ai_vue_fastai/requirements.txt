@@ -9,3 +9,6 @@ pymysql
 redis
 pillow
 qrcode
+sqlmodel
+pyspark
+

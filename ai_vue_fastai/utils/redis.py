@@ -15,3 +15,4 @@ def set_code(key: str, value: str, expire: int = 60):
 
 def get_code(key: str) -> str:
     return redis_client.get(key)
+

@@ -1,32 +1,30 @@
-
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from views.auth_router import router as router_auth
-from views.user.userinfo import router as user_router
+from views.auth import router as router_auth
+from views.user.personInfo import router as user_router
 from utils.mysql import init_db
 from fastapi.staticfiles import StaticFiles
 from config.settings import settings
 import os
 from sqlmodel import SQLModel
 from utils.database import create_engine, get_database_url
-from views.bigdata.person import router as bigdata_router
-from utils.spark_session import get_spark_session
-from init import app
+
+
+app = FastAPI()
 
 # 启动时初始化数据库
-# @app.on_event("startup")
-# def startup_event():
-#     init_db()
-
 @app.on_event("startup")
-def init_db():
-    """初始化数据库和表"""
-    # 创建多数据库引擎
-    engines = {
-        db_alias: create_engine(get_database_url(db_alias))
-        for db_alias in settings.DATABASES.keys()
-    }
-    get_spark_session()
+def startup_event():
+    init_db()
 
+# @app.on_event("startup")
+# def init_db():
+#     """初始化数据库和表"""
+#     # 创建多数据库引擎
+#     engines = {
+#         db_alias: create_engine(get_database_url(db_alias))
+#         for db_alias in settings.DATABASES.keys()
+#     }
 
 # 确保二维码目录存在，如果不存在则创建
 os.makedirs(settings.QRCODE_DIR, exist_ok=True)
@@ -47,7 +45,6 @@ app.add_middleware(
 # 注册路由
 app.include_router(router_auth, prefix="/api")
 app.include_router(user_router,prefix="/user")
-app.include_router(bigdata_router,prefix="/bigdata")
 
 if __name__ == "__main__":
     import uvicorn
