@@ -9,6 +9,6 @@
 ### 用户页面
 ![image](https://github.com/user-attachments/assets/16f9ac6f-1066-4099-905a-2778fa6c001f)
 
-###图表统计
+### 图表统计
 ![image](https://github.com/user-attachments/assets/5586dc31-6b9a-4a94-ae9f-2f9649a8de35)
 
