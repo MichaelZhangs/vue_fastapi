@@ -83,6 +83,7 @@ import axios from 'axios';
 import QRCode from 'qrcode';
 import defaultAvatar from '@/assets/default-avatar.png';
 import defaultQR from '@/assets/logo.png';
+import { API_CONFIG } from './config';
 
 const store = useStore();
 const router = useRouter(); // 获取路由实例
@@ -115,7 +116,7 @@ const handleAvatarUpload = async (event) => {
       const base64Image = reader.result; // 获取 Base64 编码的图片数据
 
       // 调用后端上传头像接口
-      const response = await axios.post('http://127.0.0.1:8000/user/upload-avatar', {
+      const response = await axios.post(`${API_CONFIG.BASE_URL}/user/upload-avatar`, {
         phone: editableUser.value.phone,
         photo: base64Image
       });
@@ -174,7 +175,7 @@ const generateQRWithAvatar = async () => {
     // 处理头像路径
     let avatarUrl = defaultAvatar; // 默认头像
     if (editableUser.value.photo) {
-      avatarUrl = `http://127.0.0.1:8000${editableUser.value.photo}`;
+      avatarUrl = `${API_CONFIG.BASE_URL}${editableUser.value.photo}`;
     }
 
     avatarImg.src = avatarUrl;
@@ -202,14 +203,14 @@ const generateQRWithAvatar = async () => {
     const qrDataUrl = canvas.toDataURL();
 
     // 保存二维码到后端
-    const response = await axios.post('http://127.0.0.1:8000/user/save-qrcode', {
+    const response = await axios.post(`${API_CONFIG.BASE_URL}/user/save-qrcode`, {
       phone: editableUser.value.phone,
       qrcode: qrDataUrl
     });
 
     if (response.data.qrcode_url) {
       editableUser.value.qrcode = response.data.qrcode_url;
-      qrcodeUrl.value = `http://127.0.0.1:8000${response.data.qrcode_url}?t=${Date.now()}`;
+      qrcodeUrl.value = `${API_CONFIG.BASE_URL}${response.data.qrcode_url}?t=${Date.now()}`;
 
       await store.dispatch('updateUser', {
         ...editableUser.value,
@@ -225,7 +226,7 @@ const generateQRWithAvatar = async () => {
 // 获取用户信息
 const fetchUserInfo = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/user/info', {
+    const response = await axios.get(`${API_CONFIG.BASE_URL}/user/info`, {
       params: {
         phone: editableUser.value.phone
       }
@@ -267,7 +268,7 @@ const saveUserInfo = async () => {
       qrcode: editableUser.value.qrcode
     };
 
-    const response = await axios.put('http://127.0.0.1:8000/user/info', requestData);
+    const response = await axios.put(`${API_CONFIG.BASE_URL}/user/info`, requestData);
     console.log("response: ", response.status);
 
     if (response.status === 200) {

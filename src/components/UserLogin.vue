@@ -127,6 +127,7 @@
 
 <script>
 import axios from "axios";
+import { API_CONFIG } from '@/views/config';
 
 export default {
   name: "UserLogin",
@@ -164,7 +165,7 @@ export default {
         const phone = this.loginType === "phone"? this.phone : this.email;
 
         // 调用后端接口获取验证码
-        const response = await axios.post("http://127.0.0.1:8000/api/send-code", {
+        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/send-code`, {
           phone
         });
 
@@ -228,7 +229,7 @@ export default {
 
         // 调用后端登录接口
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/login",
+          `${API_CONFIG.BASE_URL}/api/login`,
           {
             phone,
             password
@@ -274,7 +275,7 @@ export default {
       try {
         // 先检查用户名是否存在
         const checkResponse = await axios.post(
-          "http://127.0.0.1:8000/api/check-user",
+          `${API_CONFIG.BASE_URL}/api/check-user`,
           {
             phone: this.phone
           },
@@ -291,7 +292,7 @@ export default {
 
         // 调用后端密码登录接口
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/password-login",
+          `${API_CONFIG.BASE_URL}/api/password-login`,
           {
             phone: this.phone,
             password: this.password
@@ -357,7 +358,7 @@ export default {
       if (this.isPasswordLogin && this.phone) {
         try {
           const checkResponse = await axios.post(
-            "http://127.0.0.1:8000/api/check-user",
+            `${API_CONFIG.BASE_URL}/api/check-user`,
             {
               phone: this.phone
             },

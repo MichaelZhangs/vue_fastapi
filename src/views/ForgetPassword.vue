@@ -63,6 +63,7 @@
 
 <script>
 import axios from 'axios';
+import { API_CONFIG } from './config';
 
 export default {
   name: 'ForgetPassword',
@@ -100,7 +101,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/send-verification-code', {
+        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/send-verification-code`, {
           identifier: this.identifier,
           newPassword: this.newPassword
         });
@@ -136,7 +137,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/reset-password', {
+        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/reset-password`, {
           identifier: this.identifier,
           verificationCode: this.verificationCode,
           newPassword: this.newPassword

@@ -30,6 +30,10 @@
               <li class="sub-menu-item">
                 <router-link to="/user/userinfo/userlist" class="sub-menu-link">用户列表</router-link>
               </li>
+              <li class="sub-menu-item2">
+                <router-link to="/user/bigdatauser/userlist" class="sub-menu-link">大数据用户</router-link>
+              </li>
+
             </ul>
           </li>
         </ul>
@@ -47,6 +51,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import defaultAvatar from '@/assets/default-avatar.png';
+import { API_CONFIG } from './config';
 
 export default {
   name: 'UserPage',
@@ -62,7 +67,7 @@ export default {
     const avatarUrl = computed(() => {
       if (user.value?.photo) {
         // 拼接完整 URL
-        return `http://127.0.0.1:8000${user.value.photo}`;
+        return `${API_CONFIG.BASE_URL}${user.value.photo}`;
       }
       // 如果头像为空，使用默认头像
       return defaultAvatar;

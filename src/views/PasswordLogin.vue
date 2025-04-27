@@ -25,7 +25,8 @@
   
   <script>
   import axios from "axios";
-  
+  import { API_CONFIG } from './config';
+
   export default {
     name: "PasswordLogin",
     data() {
@@ -37,7 +38,7 @@
     methods: {
       async handlePasswordLogin() {
         try {
-          const response = await axios.post("http://127.0.0.1:8000/api/password-login", {
+          const response = await axios.post(`${API_CONFIG.BASE_URL}/api/password-login`, {
             phone: this.phone,
             password: this.password,
           });

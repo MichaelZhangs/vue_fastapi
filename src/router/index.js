@@ -8,6 +8,7 @@ import UserRegister from "@/views/UserRegister.vue";
 import ForgetPassword from "@/views/ForgetPassword.vue";
 import UserDetail from '@/views/UserDetail.vue'; // 新增详情页
 import UserList from '@/views/UserList.vue'; // 新增用户列表页
+import BigdataUser  from "@/views/BigdataUser.vue"; // 大数据用户信息
 
 const routes = [
   {
@@ -51,6 +52,16 @@ const routes = [
           },
         ],
       },
+      {
+        path: "bigdatauser",
+        component: BigdataUser,
+        children: [
+          {
+            path: "userlist", // 大数据用户作为用户信息的子路由
+            component: BigdataUser,
+          },
+        ],
+      }
     ],
   },
   {

@@ -48,6 +48,7 @@
 
 <script>
 import axios from "axios";
+import { API_CONFIG } from './config';
 
 export default {
   name: "UserRegister",
@@ -68,7 +69,7 @@ export default {
     }
     try {
      const response =   await axios.post(
-        "http://127.0.0.1:8000/api/register",
+        `${API_CONFIG.BASE_URL}/api/register`,
         {
           username: this.username,
           phone: this.phone,
@@ -80,18 +81,26 @@ export default {
           },
         }
       );
-      const { user, token } = response.data;
 
-    // 更新 Vuex 状态
-      this.$store.dispatch("login", { user, token });   
-      // 注册成功，跳转到 user 页面，并传递用户信息
+              // 存储用户信息和 Token 到 Vuex
+      await this.$store.dispatch("login", {
+          user: response.data.user,
+          token: response.data.access_token  // 兼容两种字段名
+        });
+            // 强制刷新Vuex状态
+   
+        console.log("当前localStorage:", localStorage.getItem("token"));
+      // 注册成功，跳转到 user 页面并传递用户信息
+  
       this.$router.push({
         path: "/user",
         query: {
           username: this.username,
           phone: this.phone,
         },
-      });
+      }).catch(err => {
+      console.error("路由跳转失败:", err);
+    });
     } catch (error) {
       this.registerResult = {
         success: false,
