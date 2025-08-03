@@ -83,7 +83,7 @@ import axios from 'axios';
 import QRCode from 'qrcode';
 import defaultAvatar from '@/assets/default-avatar.png';
 import defaultQR from '@/assets/logo.png';
-import { API_CONFIG } from './config';
+import { API_CONFIG } from '@/config/config';
 
 const store = useStore();
 const router = useRouter(); // 获取路由实例
@@ -228,7 +228,7 @@ const fetchUserInfo = async () => {
   try {
     const response = await axios.get(`${API_CONFIG.BASE_URL}/user/info`, {
       params: {
-        phone: editableUser.value.phone
+        id: editableUser.value.id
       }
     });
     

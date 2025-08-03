@@ -27,7 +27,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import axios from 'axios'
-import { API_CONFIG } from './config';
+import { API_CONFIG } from '@/config/config';
 
 const genderChart = ref(null)
 const ageChart = ref(null)

@@ -25,7 +25,7 @@
   
   <script>
   import axios from "axios";
-  import { API_CONFIG } from './config';
+  import { API_CONFIG } from '@/config/config';
 
   export default {
     name: "PasswordLogin",
@@ -55,7 +55,7 @@
         this.$store.dispatch("login", { user, token });
 
           // 跳转到用户页面
-          this.$router.push("/user");
+          this.$router.push("/user/dashboard");
         } catch (error) {
           if (error.response?.status === 400) {
             // 密码错误，跳转到重置密码页面

@@ -127,7 +127,7 @@
 
 <script>
 import axios from "axios";
-import { API_CONFIG } from '@/views/config';
+import { API_CONFIG } from '@/config/config';
 
 export default {
   name: "UserLogin",
@@ -247,7 +247,7 @@ export default {
           message: "登录成功！",
           data: response.data
         };
-
+          console.log("Data = ", response.data)
         // 存储用户信息和 Token 到 Vuex
         this.$store.dispatch("login", {
           user: response.data.user,
@@ -255,7 +255,7 @@ export default {
         });
 
         // 跳转到用户页面
-        this.$router.push("/user");
+        this.$router.push("/user/dashboard");
       } catch (error) {
         // 登录失败
         this.loginResult = {
@@ -318,7 +318,7 @@ export default {
         });
 
         // 跳转到用户页面
-        this.$router.push("/user");
+        this.$router.push("/user/dashboard");
       } catch (error) {
         // 登录失败
         this.loginResult = {

@@ -4,7 +4,7 @@
     <div class="profile-container">
       <!-- 头像 -->
       <div class="avatar-section">
-        <img :src="user?.photo || defaultAvatar" alt="头像" class="avatar" />
+        <img :src="getFullUrl(user?.photo) || defaultAvatar" alt="头像" class="avatar" />
         <button @click="changeAvatar" class="change-avatar-button">更换头像</button>
       </div>
 
@@ -45,6 +45,7 @@ import { useStore } from 'vuex';
 import defaultAvatar from '@/assets/default-avatar.png';
 import defaultqrcode from '@/assets/logo.png';
 import QRCode from 'qrcode';
+import { API_CONFIG } from '@/config/config'
 
 export default {
   name: 'PersonInfo',
@@ -52,6 +53,12 @@ export default {
     const store = useStore();
     const user = computed(() => store.state.user); // 从 Vuex 获取用户信息
     const qrcodeUrl = ref(''); // 二维码图片地址
+
+        // 工具方法
+    const getFullUrl = (path) => {
+      if (!path || path === defaultAvatar) return path
+      return path.startsWith('http') ? path : `${API_CONFIG.BASE_URL}${path}`
+    }
 
     // 生成二维码
     const generateQrcode = async () => {
@@ -96,6 +103,7 @@ export default {
       defaultAvatar,
       defaultqrcode,
       qrcodeUrl,
+      getFullUrl,
       generateQrcode,
       downloadQrcode,
       changeAvatar,

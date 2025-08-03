@@ -1,10 +1,15 @@
 import { createStore } from 'vuex';
+import chatModule from './modules/chat';
 
 // 从 localStorage 中恢复 Token 和用户信息
 const token = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user"));
 
 export default createStore({
+    modules: {
+      chat: chatModule,
+    },
+
   state: {
     user: user || null, // 存储用户信息
     token: token || null, // 存储 Token，初始化时从 localStorage 中恢复
@@ -46,6 +51,7 @@ export default createStore({
     logout({ commit }) {
       commit('clearUser');
       commit('clearToken');
+      commit('CLEAR_ALL_CHATS');
     },
     // 更新用户信息
     updateUser({ commit }, user) {
@@ -59,3 +65,4 @@ export default createStore({
     token: (state) => state.token,
   },
 });
+

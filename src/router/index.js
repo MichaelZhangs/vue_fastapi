@@ -1,19 +1,26 @@
+// router/index.js
 import { createRouter, createWebHistory } from "vue-router";
 import UserLogin from "@/components/UserLogin.vue";
-import UserPage from "@/views/UserPage.vue"; // 用户页面
+import UserLayout from "@/views/UserLayout.vue"; // 新增布局组件
 import UserDashboard from "@/views/UserDashboard.vue";
 import UserInfo from "@/views/UserInfo.vue";
+import UserList from "@/views/UserList.vue";
+import BigdataUser from "@/views/BigdataUser.vue";
 import PasswordLogin from "@/views/PasswordLogin.vue";
 import UserRegister from "@/views/UserRegister.vue";
 import ForgetPassword from "@/views/ForgetPassword.vue";
-import UserDetail from '@/views/UserDetail.vue'; // 新增详情页
-import UserList from '@/views/UserList.vue'; // 新增用户列表页
-import BigdataUser  from "@/views/BigdataUser.vue"; // 大数据用户信息
+import UserDetail from '@/views/UserDetail.vue';
+import UserMoments from "@/article/UserMoments.vue";
+import UserPublish from "@/article/UserPublish.vue";
+import UserDetailMoment from "@/article/UserDetailMoment.vue";
+import UserPage from "@/views/UserPage.vue";
+import ChatView from '@/views/ChatView_2.vue'; // 导入聊天组件
+import GroupChat from "@/views/GroupChat.vue";
 
 const routes = [
   {
     path: "/",
-    redirect: "/login", // 默认重定向到登录页
+    redirect: "/login",
   },
   {
     path: "/login",
@@ -34,9 +41,13 @@ const routes = [
     component: ForgetPassword
   },
   {
+    path: '/user-moment',
+    name: 'UserPage',
+    component: UserPage
+  },
+  {
     path: "/user",
-    name: "User",
-    component: UserPage,
+    component: UserLayout, // 使用布局组件
     children: [
       {
         path: "dashboard",
@@ -47,9 +58,13 @@ const routes = [
         component: UserInfo,
         children: [
           {
-            path: "userlist", // 用户列表作为用户信息的子路由
+            path: "userlist",
             component: UserList,
           },
+          {
+            path: ":userId",
+            component: UserDetail,
+          }
         ],
       },
       {
@@ -57,17 +72,39 @@ const routes = [
         component: BigdataUser,
         children: [
           {
-            path: "userlist", // 大数据用户作为用户信息的子路由
-            component: BigdataUser,
-          },
+            path: ":userId",
+            component: UserDetail, // 共用用户详情组件
+          }
         ],
-      }
+      },
+      {
+        path: 'chat/:id', // 聊天路由
+        name: 'Chat',
+        component: ChatView
+      },
+      {
+        path: 'chat/:id', // 群聊天路由
+        name: 'GroupChat',
+        component: GroupChat
+      },
     ],
   },
   {
-    path: '/user/detail', // 新增详情页路由
-    name: 'UserDetail',
-    component: UserDetail,
+    path: "/publish",
+    name: "UserPublish",
+    component: UserPublish,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/moments",
+    name: "UserMoments",
+    component: UserMoments,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/moment/:momentId",
+    name: "UserDetailMoment",
+    component: UserDetailMoment,
     meta: { requiresAuth: true },
   },
 ];
@@ -79,11 +116,11 @@ const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem("token"); // 假设登录后会将 token 存入 localStorage
+  const isLoggedIn = localStorage.getItem("token");
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next("/login"); // 未登录则跳转到登录页
+    next("/login");
   } else {
-    next(); // 已登录则继续
+    next();
   }
 });
 

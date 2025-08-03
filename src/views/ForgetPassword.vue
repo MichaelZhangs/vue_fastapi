@@ -63,7 +63,7 @@
 
 <script>
 import axios from 'axios';
-import { API_CONFIG } from './config';
+import { API_CONFIG } from '@/config/config';
 
 export default {
   name: 'ForgetPassword',
