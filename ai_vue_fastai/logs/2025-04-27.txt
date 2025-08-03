@@ -1,0 +1,277 @@
+2025-04-27 12:19:18,239 - INFO - SELECT DATABASE()
+2025-04-27 12:19:18,240 - INFO - [raw sql] {}
+2025-04-27 12:19:18,245 - INFO - SELECT @@sql_mode
+2025-04-27 12:19:18,246 - INFO - [raw sql] {}
+2025-04-27 12:19:18,247 - INFO - SELECT @@lower_case_table_names
+2025-04-27 12:19:18,247 - INFO - [raw sql] {}
+2025-04-27 12:19:18,250 - INFO - BEGIN (implicit)
+2025-04-27 12:19:18,255 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+WHERE users.phone = %(phone_1)s
+2025-04-27 12:19:18,255 - INFO - [generated in 0.00034s] {'phone_1': '16723456432'}
+2025-04-27 12:19:18,390 - INFO - ROLLBACK
+2025-04-27 12:19:18,648 - INFO - BEGIN (implicit)
+2025-04-27 12:19:18,648 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+WHERE users.phone = %(phone_1)s
+2025-04-27 12:19:18,648 - INFO - [cached since 0.3931s ago] {'phone_1': '16723456432'}
+2025-04-27 12:19:18,650 - INFO - ROLLBACK
+2025-04-27 12:19:18,658 - INFO - BEGIN (implicit)
+2025-04-27 12:19:18,659 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+WHERE users.phone = %(phone_1)s
+2025-04-27 12:19:18,659 - INFO - [cached since 0.4039s ago] {'phone_1': '16723456432'}
+2025-04-27 12:19:18,661 - INFO - ROLLBACK
+2025-04-27 12:34:49,968 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 12:35:13,011 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 12:43:59,611 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 12:47:54,475 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 12:58:24,311 - ERROR - 获取性别分布失败: Java gateway process exited before sending its port number
+2025-04-27 13:01:16,406 - ERROR - 获取性别分布失败: Java gateway process exited before sending its port number
+2025-04-27 13:04:58,495 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 13:12:06,977 - ERROR - 获取性别分布失败: Java gateway process exited before sending its port number
+2025-04-27 13:12:44,330 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+2025-04-27 13:18:29,666 - ERROR - 获取性别分布失败: An error occurred while calling None.org.apache.spark.sql.SparkSession. Trace:
+py4j.Py4JException: Constructor org.apache.spark.sql.SparkSession([class org.apache.spark.SparkContext, class java.util.HashMap]) does not exist
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:179)
+	at py4j.reflection.ReflectionEngine.getConstructor(ReflectionEngine.java:196)
+	at py4j.Gateway.invoke(Gateway.java:237)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+
+2025-04-27 13:22:28,233 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: dict_values([104171, 93733, 0]) of type <class 'dict_values'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:24:10,987 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: dict_values([104171, 93733, 0]) of type <class 'dict_values'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:40:24,021 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: [104171, 93733, 0] of type <class 'list'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:41:22,916 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: 197904 of type <class 'int'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:42:39,880 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: 197904 of type <class 'int'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:45:29,029 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: 197904 of type <class 'int'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:47:31,289 - ERROR - 获取性别分布失败: Invalid argument, not a string or column: 197904 of type <class 'int'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 13:49:25,914 - ERROR - 获取性别分布失败: '其他'
+2025-04-27 13:55:17,179 - ERROR - 获取性别分布失败: 'NoneType' object has no attribute 'read'
+2025-04-27 14:02:12,359 - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "D:\conda\lib\site-packages\py4j\clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+  File "D:\conda\lib\socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+2025-04-27 14:02:12,398 - INFO - Closing down clientserver connection
+2025-04-27 14:02:12,398 - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\conda\lib\site-packages\py4j\clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+  File "D:\conda\lib\socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\conda\lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+  File "D:\conda\lib\site-packages\py4j\clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+2025-04-27 14:02:12,399 - INFO - Closing down clientserver connection
+2025-04-27 15:44:04,578 - INFO - SELECT DATABASE()
+2025-04-27 15:44:04,579 - INFO - [raw sql] {}
+2025-04-27 15:44:04,580 - INFO - SELECT @@sql_mode
+2025-04-27 15:44:04,581 - INFO - [raw sql] {}
+2025-04-27 15:44:04,582 - INFO - SELECT @@lower_case_table_names
+2025-04-27 15:44:04,582 - INFO - [raw sql] {}
+2025-04-27 15:44:04,584 - INFO - BEGIN (implicit)
+2025-04-27 15:44:04,593 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 15:44:04,593 - INFO - [generated in 0.00044s] {}
+2025-04-27 15:44:04,600 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 15:44:04,600 - INFO - [generated in 0.00041s] {'param_1': 0, 'param_2': 10}
+2025-04-27 15:44:04,604 - INFO - ROLLBACK
+2025-04-27 15:45:28,372 - INFO - SELECT DATABASE()
+2025-04-27 15:45:28,373 - INFO - [raw sql] {}
+2025-04-27 15:45:28,374 - INFO - SELECT @@sql_mode
+2025-04-27 15:45:28,374 - INFO - [raw sql] {}
+2025-04-27 15:45:28,375 - INFO - SELECT @@lower_case_table_names
+2025-04-27 15:45:28,376 - INFO - [raw sql] {}
+2025-04-27 15:45:28,377 - INFO - BEGIN (implicit)
+2025-04-27 15:45:28,384 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 15:45:28,385 - INFO - [generated in 0.00055s] {}
+2025-04-27 15:45:28,433 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 15:45:28,433 - INFO - [generated in 0.00046s] {'param_1': 0, 'param_2': 10}
+2025-04-27 15:45:28,437 - INFO - ROLLBACK
+2025-04-27 16:00:15,164 - INFO - BEGIN (implicit)
+2025-04-27 16:00:15,165 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 16:00:15,165 - INFO - [cached since 886.8s ago] {}
+2025-04-27 16:00:15,174 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 16:00:15,174 - INFO - [cached since 886.7s ago] {'param_1': 0, 'param_2': 10}
+2025-04-27 16:00:15,176 - INFO - ROLLBACK
+2025-04-27 16:12:48,263 - INFO - SELECT DATABASE()
+2025-04-27 16:12:48,263 - INFO - [raw sql] {}
+2025-04-27 16:12:48,265 - INFO - SELECT @@sql_mode
+2025-04-27 16:12:48,265 - INFO - [raw sql] {}
+2025-04-27 16:12:48,265 - INFO - SELECT @@lower_case_table_names
+2025-04-27 16:12:48,266 - INFO - [raw sql] {}
+2025-04-27 16:12:48,267 - INFO - BEGIN (implicit)
+2025-04-27 16:12:48,272 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 16:12:48,272 - INFO - [generated in 0.00034s] {}
+2025-04-27 16:12:48,276 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 16:12:48,276 - INFO - [generated in 0.00027s] {'param_1': 0, 'param_2': 10}
+2025-04-27 16:12:48,280 - INFO - ROLLBACK
+2025-04-27 16:14:42,144 - INFO - BEGIN (implicit)
+2025-04-27 16:14:42,145 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 16:14:42,145 - INFO - [cached since 113.9s ago] {}
+2025-04-27 16:14:42,156 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 16:14:42,156 - INFO - [cached since 113.9s ago] {'param_1': 0, 'param_2': 10}
+2025-04-27 16:14:42,160 - INFO - ROLLBACK
+2025-04-27 16:51:59,934 - INFO - BEGIN (implicit)
+2025-04-27 16:51:59,935 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 16:51:59,936 - INFO - [cached since 2352s ago] {}
+2025-04-27 16:51:59,944 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 16:51:59,944 - INFO - [cached since 2352s ago] {'param_1': 0, 'param_2': 10}
+2025-04-27 16:51:59,947 - INFO - ROLLBACK
+2025-04-27 17:12:01,105 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: [12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6] of type <class 'list'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:12:13,208 - INFO - SELECT DATABASE()
+2025-04-27 17:12:13,209 - INFO - [raw sql] {}
+2025-04-27 17:12:13,210 - INFO - SELECT @@sql_mode
+2025-04-27 17:12:13,210 - INFO - [raw sql] {}
+2025-04-27 17:12:13,211 - INFO - SELECT @@lower_case_table_names
+2025-04-27 17:12:13,211 - INFO - [raw sql] {}
+2025-04-27 17:12:13,213 - INFO - BEGIN (implicit)
+2025-04-27 17:12:13,221 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 17:12:13,221 - INFO - [generated in 0.00040s] {}
+2025-04-27 17:12:13,229 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 17:12:13,229 - INFO - [generated in 0.00036s] {'param_1': 0, 'param_2': 10}
+2025-04-27 17:12:13,232 - INFO - ROLLBACK
+2025-04-27 17:12:17,372 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: [12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6] of type <class 'list'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:15:03,522 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: dict_values([12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6]) of type <class 'dict_values'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:15:04,177 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: dict_values([12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6]) of type <class 'dict_values'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:16:47,610 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: [12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6] of type <class 'list'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:19:32,197 - ERROR - 获取各省人口分布失败: Invalid argument, not a string or column: dict_values([12874, 8305, 5005, 3407, 19191, 6082, 7687, 2104, 6199, 10002, 13047, 12274, 3624, 5989, 816, 14971, 7369, 4149, 3519, 2875, 5280, 10807, 2301, 15142, 6596, 1345, 795, 836, 2264, 1513, 1183, 323, 24, 6]) of type <class 'dict_values'>. For column literals, use 'lit', 'array', 'struct' or 'create_map' function.
+2025-04-27 17:29:19,089 - INFO - SELECT DATABASE()
+2025-04-27 17:29:19,090 - INFO - [raw sql] {}
+2025-04-27 17:29:19,094 - INFO - SELECT @@sql_mode
+2025-04-27 17:29:19,094 - INFO - [raw sql] {}
+2025-04-27 17:29:19,095 - INFO - SELECT @@lower_case_table_names
+2025-04-27 17:29:19,096 - INFO - [raw sql] {}
+2025-04-27 17:29:19,098 - INFO - BEGIN (implicit)
+2025-04-27 17:29:19,100 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 17:29:19,100 - INFO - [generated in 0.00040s] {}
+2025-04-27 17:29:19,109 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 17:29:19,109 - INFO - [generated in 0.00093s] {'param_1': 0, 'param_2': 10}
+2025-04-27 17:29:19,113 - INFO - ROLLBACK
+2025-04-27 17:50:06,086 - INFO - SELECT DATABASE()
+2025-04-27 17:50:06,087 - INFO - [raw sql] {}
+2025-04-27 17:50:06,088 - INFO - SELECT @@sql_mode
+2025-04-27 17:50:06,088 - INFO - [raw sql] {}
+2025-04-27 17:50:06,090 - INFO - SELECT @@lower_case_table_names
+2025-04-27 17:50:06,090 - INFO - [raw sql] {}
+2025-04-27 17:50:06,091 - INFO - BEGIN (implicit)
+2025-04-27 17:50:06,098 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 17:50:06,099 - INFO - [generated in 0.00048s] {}
+2025-04-27 17:50:06,105 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 17:50:06,105 - INFO - [generated in 0.00038s] {'param_1': 0, 'param_2': 10}
+2025-04-27 17:50:06,108 - INFO - ROLLBACK
+2025-04-27 18:01:32,146 - INFO - BEGIN (implicit)
+2025-04-27 18:01:32,147 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users
+2025-04-27 18:01:32,148 - INFO - [cached since 686s ago] {}
+2025-04-27 18:01:32,155 - INFO - SELECT users.phone, users.email, users.username, users.sex, users.description, users.photo, users.qrcode, users.password, users.id, users.created_at 
+FROM users 
+ LIMIT %(param_1)s, %(param_2)s
+2025-04-27 18:01:32,156 - INFO - [cached since 686.1s ago] {'param_1': 0, 'param_2': 10}
+2025-04-27 18:01:32,159 - INFO - ROLLBACK
