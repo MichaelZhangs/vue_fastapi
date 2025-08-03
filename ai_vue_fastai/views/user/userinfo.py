@@ -2,25 +2,20 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Optional, List
 from pydantic import BaseModel, Field
+from utils.redis import set_code, get_code, set_userinfo_to_redis
 from enum import Enum
+import uuid
 import base64
 import os
 from config.settings import settings
 from utils.log import log_info, log_error
 from utils.database import get_session
 from utils.mysql_model import User, SexEnum, UserPublic, UserUpdate, UserInfo
-from utils.mysql_crud import  UserCRUD
+from utils.mysql_crud import UserCRUD
 from sqlmodel import Session
+import json
 
 router = APIRouter(tags=["用户信息"])
-
-
-class PagedResponse(BaseModel):
-    data: List[UserPublic]
-    total: int
-    page: int
-    page_size: int
-
 
 class SaveQrcodeRequest(BaseModel):
     phone: str
@@ -35,6 +30,19 @@ class SearchPhoneRequest(BaseModel):
     qrcode: Optional[str] = None
     photo: Optional[str] = None
 
+class GetUserList(BaseModel):
+    username: str
+    phone: str
+    photo:  Optional[str]
+    sex: SexEnum
+    id: int
+
+class PagedResponse(BaseModel):
+    data: List[GetUserList]
+    total: int
+    page: int
+    page_size: int
+
 class SaveAvatarRequest(BaseModel):
     phone: str
     photo: str
@@ -42,6 +50,7 @@ class SaveAvatarRequest(BaseModel):
 class UpdatePhoneRequest(BaseModel):
     new_phone: str
     verification_code: str
+
 
 @router.get("/get-users", response_model=PagedResponse)
 async def get_users(
@@ -81,15 +90,70 @@ async def get_users(
         raise HTTPException(status_code=500, detail="获取用户列表失败")
 
 
-@router.get("/info", response_model=UserInfo)
-async def get_user_info(
-        phone: str = Query(regex=r"\d+"),
+@router.get("/search", response_model=PagedResponse)
+async def search_users(
+        keyword: Optional[str] = Query(None, description="搜索关键词，同时匹配用户名和手机号"),
+        page: int = Query(1, ge=1, description="页码"),
+        page_size: int = Query(10, ge=1, le=100, description="每页数量"),
         session: Session = Depends(get_session)
 ):
     try:
-        print(f"user : {phone}")
         crud = UserCRUD(session)
-        user = crud.get_user_by_phone(phone)
+        print(f"keyword = {keyword}")
+        # 构建查询条件
+        filters = {}
+        if keyword:
+            # 同时匹配用户名和手机号
+            filters["search_term"] = keyword
+
+        # 获取总数
+        total = crud.count_users(**filters)
+
+        print(f"total = {total}")
+        # 计算偏移量
+        offset = (page - 1) * page_size
+
+        # 获取分页数据
+        users = crud.get_users(
+            skip=offset,
+            limit=page_size,
+            **filters
+        )
+        print(f"users = {users}")
+        # 转换为前端可用的格式
+        user_list = []
+        for user in users:
+            user_list.append({
+                "id": user.id,
+                "username": user.username,
+                "phone": user.phone,
+                "email": user.email or '',
+                "sex": user.sex or 'other',
+                "description": user.description or '',
+                "qrcode": user.qrcode or '',
+                "photo": user.photo or ''
+            })
+        print(f"user_list = {user_list}")
+        return {
+            "data": users,
+            "total": total,
+            "page": page,
+            "page_size": page_size
+        }
+
+    except Exception as e:
+        log_error(f"搜索用户失败: {str(e)}")
+        raise HTTPException(status_code=500, detail="搜索用户失败")
+
+@router.get("/info", response_model=UserInfo)
+async def get_user_info(
+        id: int,
+        session: Session = Depends(get_session)
+):
+    try:
+        print(f"user_id : {id}")
+        crud = UserCRUD(session)
+        user = crud.get_user_by_user_id(id)
 
         if not user:
             raise HTTPException(status_code=404, detail="用户不存在")
@@ -101,12 +165,12 @@ async def get_user_info(
             "sex": user.sex or 'other',
             "description": user.description or '',
             "qrcode": user.qrcode or '',
-            "photo": user.photo or ''
+            "photo": user.photo or '',
+            "id": user.id
         }
     except Exception as e:
         log_error(f"获取用户信息失败: {str(e)}")
         raise HTTPException(status_code=500, detail="获取用户信息失败")
-
 
 @router.put("/info")
 async def update_user_info(
@@ -122,6 +186,16 @@ async def update_user_info(
         crud = UserCRUD(session)
 
         updated_user = crud.update_user(request.phone,request)
+
+        user_dic = {
+                "username": updated_user.username,
+                "phone": updated_user.phone,
+                "id": updated_user.id,
+                "photo": updated_user.photo,
+                "email": updated_user.email or "",
+            }
+
+        set_userinfo_to_redis(f"{updated_user.id}_info", json.dumps(user_dic))
 
         if not updated_user:
             raise HTTPException(status_code=404, detail="用户不存在")
@@ -173,11 +247,13 @@ async def upload_avatar(
         # 解码并保存图片
         image_data = base64.b64decode(request.photo.split(",")[1])
         os.makedirs(settings.AVATAR_DIR, exist_ok=True)
-        filename = f"ph_{request.phone}.png"
+        unique_id = uuid.uuid4().hex[:4]
+        filename = f"ph_{request.phone}_{unique_id}.png"
         save_path = os.path.join(settings.AVATAR_DIR, filename)
 
         with open(save_path, "wb") as f:
             f.write(image_data)
+
 
         # 更新数据库
         avatar_url = f"/{settings.AVATAR_DIR}/{filename}"

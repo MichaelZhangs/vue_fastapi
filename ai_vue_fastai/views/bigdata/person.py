@@ -10,6 +10,7 @@ from config.settings import Settings
 from utils.spark_session import get_spark_session
 from utils.redis import set_code, get_code
 import json
+from init import app
 
 router = APIRouter(tags=["用户信息"])
 
@@ -139,13 +140,13 @@ async def get_gender_distribution():
                 log_error("Failed to decode JSON from Redis.")
 
         spark = get_spark_session()
-        spark.sparkContext.setLogLevel("WARN")  # 设置日志级别为WARN减少日志输出
+        # app.spark.sparkContext.setLogLevel("WARN")  # 设置日志级别为WARN减少日志输出
 
         # 从settings.py获取数据库配置
         db_config = Settings.DATABASES["db1"]
         # JDBC连接配置
         jdbc_url = f"jdbc:mysql://{db_config['HOST']}:{db_config['PORT']}/{db_config['DB']}?useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=UTC"
-
+        print(f"jdbc_url : {jdbc_url}")
         properties = {
             "user": db_config["USER"],
             "password": db_config["PASSWORD"],
@@ -343,9 +344,9 @@ async def get_province_distribution():
 
 
         # 处理结果
-        counts = {row["province"]: int(row["count"]) for row in sdf.collect()}
+        counts = {str(row["province"]) if row["province"] is not None else "Unknown": int(row["count"]) for row in sdf.collect()}
+
         total = sum(counts.values())
-        print(f"total : {total}")
 
         result = {
             "province_counts": counts,

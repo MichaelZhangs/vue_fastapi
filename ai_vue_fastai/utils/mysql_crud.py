@@ -1,11 +1,11 @@
-# crud.py
 from sqlmodel import Session, select, and_, or_
-from typing import List, Optional,Generator
+from typing import List, Optional, Generator
 from utils.mysql_model import User, UserCreate, UserUpdate
-from utils.database import get_session,get_db_session
+from utils.database import get_session, get_db_session
 from contextlib import contextmanager
 
 session = get_db_session()
+
 
 class UserCRUD():
     def __init__(self, session: Session):
@@ -27,12 +27,23 @@ class UserCRUD():
             username: Optional[str] = None,
             phone: Optional[str] = None,
             sex: Optional[str] = None,
+            search_term: Optional[str] = None,  # 新增搜索关键词参数
             skip: int = 0,
             limit: int = 100
     ) -> List[User]:
         statement = select(User)
 
         conditions = []
+
+        # 支持单个搜索词同时匹配用户名和手机号
+        if search_term:
+            term_condition = or_(
+                User.username.like(f"%{search_term}%"),
+                User.phone.like(f"%{search_term}%")
+            )
+            conditions.append(term_condition)
+
+        # 保留原有的单独过滤条件
         if username:
             conditions.append(User.username.like(f"%{username}%"))
         if phone:
@@ -50,11 +61,22 @@ class UserCRUD():
             self,
             username: Optional[str] = None,
             phone: Optional[str] = None,
-            sex: Optional[str] = None
+            sex: Optional[str] = None,
+            search_term: Optional[str] = None  # 新增搜索关键词参数
     ) -> int:
         statement = select(User)
 
         conditions = []
+
+        # 支持单个搜索词同时匹配用户名和手机号
+        if search_term:
+            term_condition = or_(
+                User.username.like(f"%{search_term}%"),
+                User.phone.like(f"%{search_term}%")
+            )
+            conditions.append(term_condition)
+        print(f"conditions = {conditions}")
+        # 保留原有的单独过滤条件
         if username:
             conditions.append(User.username.like(f"%{username}%"))
         if phone:
@@ -65,6 +87,7 @@ class UserCRUD():
         if conditions:
             statement = statement.where(and_(*conditions))
 
+        print(f"conditions2 = {conditions}")
         return len(self.session.exec(statement).all())
 
     def update_user(self, phone: str, user_update: UserUpdate) -> Optional[User]:
@@ -96,6 +119,10 @@ class UserCRUD():
         statement = select(User).where(User.username == username)
         return self.session.exec(statement).first()
 
+    def get_user_by_user_id(self, id: int) -> Optional[User]:
+        statement = select(User).where(User.id == id)
+        return self.session.exec(statement).first()
+
     def get_user_by_email(self, email: str) -> Optional[User]:
         statement = select(User).where(User.email == email)
         return self.session.exec(statement).first()
@@ -105,11 +132,10 @@ class UserCRUD():
 
     def delete_user(self, user_id: int) -> bool:
         """删除用户"""
-        with self.get_db() as session:
-            db_user = session.get(User, user_id)
-            if not db_user:
-                return False
+        db_user = self.session.get(User, user_id)
+        if not db_user:
+            return False
 
-            session.delete(db_user)
-            session.commit()
-            return True
+        self.session.delete(db_user)
+        self.session.commit()
+        return True

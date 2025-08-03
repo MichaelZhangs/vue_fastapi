@@ -52,11 +52,14 @@ class UserInfo(BaseModel):
     qrcode: Optional[str] = None
     photo: Optional[str] = None
     password: Optional[str] = None
+    id: int
 
 
 class LoginInfo(BaseModel):
     username: str
     phone: str
+    id: int
+    photo: Optional[str] = None
 
 
 class UserRegister(UserBase):

@@ -192,14 +192,12 @@ async def save_qrcode(request: SaveQrcodeRequest):
         # 解码Base64图片数据
         phone = request.phone
         qrcode = request.qrcode
-        print(f"/save-qrcode : {phone}")
         image_data = base64.b64decode(qrcode.split(",")[1])
         # 确保二维码目录存在，如果不存在则创建
         os.makedirs(settings.QRCODE_DIR, exist_ok=True)
         # 保存文件
         file_name = f"qrcode_{phone}.png"
         file_path = os.path.join(settings.QRCODE_DIR, file_name)
-        print(f"file_path: {file_path}")
         with open(file_path, "wb") as f:
             f.write(image_data)
 

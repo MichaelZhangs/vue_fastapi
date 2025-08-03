@@ -11,4 +11,7 @@ pillow
 qrcode
 sqlmodel
 pyspark
-
+pymongo
+motor
+websockets
+shortuuid

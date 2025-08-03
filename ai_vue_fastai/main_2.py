@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from views.auth import router as router_auth
 from views.user.personInfo import router as user_router
+
 from utils.mysql import init_db
 from fastapi.staticfiles import StaticFiles
 from config.settings import settings

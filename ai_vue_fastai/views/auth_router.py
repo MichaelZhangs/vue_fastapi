@@ -4,13 +4,14 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from config.settings import settings
-from utils.redis import set_code, get_code
+from utils.redis import set_code, get_code, set_userinfo_to_redis
 from utils.log import log_info, log_error
 from utils.database import get_session
 from utils.mysql_model import User, UserCreate, Token,UserRegisterDict
 from utils.mysql_crud import UserCRUD
 from sqlmodel import Session
 import random
+import json
 
 router = APIRouter()
 
@@ -77,6 +78,14 @@ async def register(
             "phone": user.phone,
             "password": user.password
         }
+        user_info = {
+            "username": user.username or "",
+            "phone": user.phone,
+            "id": user.id,
+            "email": user.email or "",
+            "photo": user.photo or ""
+        }
+        set_userinfo_to_redis(f"{user.id}_info", json.dumps(user_info))
         return {"message": "注册成功", "user":userdict}
     except HTTPException as e:
         raise e
@@ -138,16 +147,26 @@ async def login(
             expires_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
         )
 
-        print(f"access_token: {access_token}")
-        print(f"username= {user.username}, phone= {user.phone}")
+        user_dic = {
+                "username": user.username,
+                "phone": user.phone,
+                "id": user.id,
+                "photo": user.photo
+                # "email": user["email"],
+            }
+        user_info = {
+                "username": user.username,
+                "phone": user.phone,
+                "id": user.id,
+                "photo": user.photo,
+                "email": user.email or "",
+            }
+
+        set_userinfo_to_redis(f"{user.id}_info", json.dumps(user_info))
         return {
             "access_token": access_token,
             "token_type": "bearer",
-            "user": {
-                "username": user.username,
-                "phone": user.phone,
-                # "email": user["email"],
-            },
+            "user": user_dic,
         }
     except HTTPException as e:
         raise e
@@ -178,6 +197,15 @@ async def password_login(
             data={"sub": user.username},
             expires_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
         )
+        user_info = {
+                "username": user.username,
+                "phone": user.phone,
+                "email": user.email,
+                "id": user.id,
+                "photo": user.photo
+        }
+        # 关键信息持久存储到redis
+        set_userinfo_to_redis(f"{user.id}_info", json.dumps(user_info))
 
         return {
             "access_token": access_token,
@@ -186,6 +214,7 @@ async def password_login(
                 "username": user.username,
                 "phone": user.phone,
                 "email": user.email,
+                "id": user.id
             },
         }
     except HTTPException as e:
@@ -212,7 +241,6 @@ async def send_verification_code(
         # 生成并存储验证码
         code = str(random.randint(100000, 999999))
         set_code(request.identifier, code)
-
         log_info(f"发送验证码: identifier={request.identifier}, code={code}")
         return {"code": code}
     except HTTPException as e:

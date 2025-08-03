@@ -46,12 +46,34 @@ class Settings:
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1
     QRCODE_DIR: str = 'qrcode' # 二维码
     AVATAR_DIR: str = 'avatar' #头像
+    ARTICLE_MEDIA: str = 'article_media'
+    CHAT_MEDIA:  str = 'chat_media'
 
     server_host = "http://localhost:8000"
 
     # 日志配置
     LOG_DIR: str = "logs"
     LOG_FILE: str = os.path.join(LOG_DIR, "app.log")
+
+    # 在配置文件中设置密钥
+    MESSAGE_KEY = "b1d8f7e3a9c5e7b4d9f1e3a8c7e5f9b3d7e1a9c5e7b4d9f1e3a8c7e5f9b3d"
+
+    ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"]
+    ALLOWED_VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/x-msvideo"]
+    ALLOWED_AUDIO_TYPES = [
+        "audio/mpeg", "audio/flac", "audio/wav", "audio/ogg", "audio/aac",
+        "audios/x-m4a", "audios/x-wma", "audios/mp4", "audios/webm"
+    ]
+    ALLOWED_FILE_TYPES = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/zip',
+        'application/x-rar-compressed',
+        'text/plain'
+    ]
 
     class Config:
         env_file = ".env"
