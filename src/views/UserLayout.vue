@@ -143,8 +143,8 @@
                   {{ group.lastMessage }}
                 </div>
               </div>
-              <div v-if="group.unread_count > 0" class="unread-count">
-                {{ group.unread_count > 99 ? '99+' : group.unread_count }}
+              <div v-if="group.unreadCount > 0" class="unread-count">
+                {{ group.unreadCount > 99 ? '99+' : group.unreadCount }}
               </div>
             </div>
           </div>
